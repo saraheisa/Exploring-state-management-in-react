@@ -13,8 +13,8 @@ export default function useFetch(getData, ...options) {
   useEffect(() => {
     getData(...options)
       .then((data) => {
-        setData(data);
         setRequestStatus(REQUEST_STATUS.SUCCESS);
+        setData(data);
       })
       .catch((err) => setRequestStatus(REQUEST_STATUS.ERROR));
   }, []);
