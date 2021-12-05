@@ -1,29 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import { getProducts } from "./services/productService";
 import Spinner from "./Spinner";
-
-const REQUEST_STATUS = {
-  PENDING: "pending",
-  SUCCESS: "success",
-  ERROR: "error",
-};
+import useFetch, { REQUEST_STATUS } from "./hooks/useFetch";
 
 export default function App() {
   const [size, setSize] = useState("");
-  const [products, setProducts] = useState([]);
-  const [requestStatus, setRequestStatus] = useState(REQUEST_STATUS.PENDING);
-
-  useEffect(() => {
-    getProducts("shoes")
-      .then((data) => {
-        setProducts(data);
-        setRequestStatus(REQUEST_STATUS.SUCCESS);
-      })
-      .catch((err) => setRequestStatus(REQUEST_STATUS.ERROR));
-  }, []);
+  const { data: products, requestStatus } = useFetch(getProducts, "shoes");
 
   function renderProduct(p) {
     return (
